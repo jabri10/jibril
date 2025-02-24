@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=40 device-width, initial-scale=1.0">
-  <meta name="jibril ommar" content="al dosari quran page">
-  <meta name="al dosari, quran recitations" content="Welcome to Jabril's personal page. Discover my interests, hobbies, and more about my life.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="jibril ommar">
+  <meta name="description" content="Welcome to Jabril's personal page. Discover my interests, hobbies, and more about my life.">
   <meta name="keywords" content="Jabril, personal page, interests, hobbies, football, family">
   <title>Jabril's Page - Personal Interests and Hobbies</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
