@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A beautiful Ramadan themed page with quotes, images, and more">
+    <meta name="keywords" content="Ramadan, Mubarak, Islam, Month of Fasting, Quran, Blessings">
+    <meta name="author" content="Your Name">
     <title>Ramadan Mubarak</title>
     <style>
         body {
@@ -23,13 +26,13 @@
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 5vw;
             margin: 20px;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
         }
 
         .quote {
-            font-size: 1.5rem;
+            font-size: 2vw;
             font-style: italic;
             margin: 20px;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
@@ -52,24 +55,51 @@
             color: #fff;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
+
+        nav {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
 
+    <nav>
+        <a href="#home">Home</a>
+        <a href="about.html">About Ramadan</a>
+        <a href="#blessings">Ramadan Blessings</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
     <div class="card">
         <h1>Ramadan Mubarak</h1>
         <p class="quote">"Ramadan is the month in which the Quran was revealed, a guidance for mankind."</p>
-        <p>May this blessed month bring peace, prosperity, and blessings to you and your family. Let us reflect and grow closer to our faith. 🌙</p>
+        
+        <p><strong>May this blessed month bring peace, prosperity, and blessings</strong> to you and your family. Let us reflect and grow closer to our faith. 🌙</p>
+        
+        <p>Click below to read more about the significance of Ramadan.</p>
+        
+        <a href="about.html" class="button">Learn More About Ramadan</a>
     </div>
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:contact@jabril.com">contact@jabril.com</a></p>
-    </section>
-  </main>
 
-  <footer>
-    &copy; 2023 Jabril's Page
-  </footer>
-  <script src="script.js"></script>
+    <div class="footer">
+        <p>&copy; 2025 Ramadan Wishes. All rights reserved.</p>
+    </div>
+
 </body>
 </html>
