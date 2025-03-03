@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A beautiful Ramadan themed page with quotes, images, and more">
-    <meta name="keywords" content="Ramadan, Mubarak, Islam, Month of Fasting, Quran, Blessings">
+    <meta name="keywords" content="Ramadan, Mubarak, Islam, Month of Fasting, Quran, Blessings, Fasting, Eid">
     <meta name="author" content="Your Name">
     <title>Ramadan Mubarak</title>
     <style>
@@ -23,12 +23,14 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
         h1 {
             font-size: 5vw;
             margin: 20px;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            animation: fadeIn 2s ease-out;
         }
 
         .quote {
@@ -46,6 +48,7 @@
             max-width: 600px;
             margin: 20px auto;
             box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 2s ease-out;
         }
 
         .footer {
@@ -63,6 +66,9 @@
             top: 0;
             width: 100%;
             z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         nav a {
@@ -70,20 +76,76 @@
             margin: 10px;
             text-decoration: none;
             font-weight: bold;
+            padding: 10px 15px;
         }
 
         nav a:hover {
             text-decoration: underline;
+            background-color: #444;
+            border-radius: 5px;
         }
+
+        nav a.active {
+            background-color: #008CBA;
+            border-radius: 5px;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            background-color: #008CBA;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #005f75;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 8vw;
+            }
+
+            .quote {
+                font-size: 3vw;
+            }
+
+            .card {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav a {
+                margin: 5px 0;
+            }
+        }
+
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#home">Home</a>
+        <a href="index.html" class="active">Home</a>
         <a href="about.html">About Ramadan</a>
         <a href="#blessings">Ramadan Blessings</a>
-        <a href="#contact">Contact</a>
+        <a href="contact.html">Contact</a>
     </nav>
 
     <div class="card">
@@ -101,5 +163,27 @@
         <p>&copy; 2025 Ramadan Wishes. All rights reserved.</p>
     </div>
 
+    <script>
+        // Countdown Timer
+        const countdownDate = new Date("March 23, 2025 00:00:00").getTime();
+
+        const countdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById("countdown").innerHTML = "Ramadan has started!";
+            } else {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+            }
+        }, 1000);
+    </script>
+
 </body>
 </html>
+
