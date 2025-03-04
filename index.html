@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn About Islam</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover {
+            background-color: #555;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        section {
+            display: none; /* Hide sections by default */
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        section.active {
+            display: block; /* Show active section */
+        }
+
+        footer {
+            text-align: center;
+            padding: 1em;
+            background-color: #333;
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Learn About Islam</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('pillars')">The Five Pillars</a></li>
+                <li><a href="#" onclick="showPage('prophet')">Prophet Muhammad (PBUH)</a></li>
+                <li><a href="#" onclick="showPage('quran')">The Quran</a></li>
+                <li><a href="#" onclick="showPage('culture')">Islamic Culture</a></li>
+                <li><a href="#" onclick="showPage('sharia')">Islamic Law</a></li>
+                <li><a href="#" onclick="showPage('peace')">Islam and Peace</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="active">
+            <h1>Welcome to Learn about Islam</h1>
+            <p>Islam is one of the world’s major religions, with over a billion followers. It is based on the teachings of Prophet Muhammad (PBUH) and the Quran. This site will help you learn more about the core aspects of Islam.</p>
+        </section>
+
+        <section id="pillars">
+            <h1>The Five Pillars of Islam</h1>
+            <p>The Five Pillars of Islam are the foundation of a Muslim's faith and practice:</p>
+            <ul>
+                <li><strong>Shahada</strong> - The declaration of faith: "There is no god but Allah, and Muhammad is His Messenger."</li>
+                <li><strong>Salah</strong> - The five daily prayers that connect Muslims with Allah.</li>
+                <li><strong>Zakat</strong> - The giving of charity to those in need, typically 2.5% of one’s wealth.</li>
+                <li><strong>Sawm</strong> - Fasting during the month of Ramadan, refraining from food, drink, and sinful behavior.</li>
+                <li><strong>Hajj</strong> - The pilgrimage to Mecca that every Muslim must undertake at least once in their lifetime if financially and physically able.</li>
+            </ul>
+        </section>
+
+        <section id="prophet">
+            <h1>The Life of Prophet Muhammad (PBUH)</h1>
+            <p>Prophet Muhammad (PBUH) was born in Mecca in 570 CE. He is the final messenger of Allah, bringing the final revelation to humanity, the Quran. His teachings form the foundation of Islamic beliefs and practices.</p>
+            <p>He was known for his honesty, kindness, and wisdom. His life serves as a model for Muslims to follow, both in spiritual and daily matters. He is deeply revered in Islam as the "Seal of the Prophets."</p>
+        </section>
+
+        <section id="quran">
+            <h1>The Holy Quran</h1>
+            <p>The Quran is the sacred text of Islam, believed to be the direct word of God as revealed to Prophet Muhammad (PBUH) over 23 years. It is considered the ultimate source of guidance for Muslims in all aspects of life.</p>
+            <p>The Quran is divided into 114 chapters, called surahs, which cover theology, morality, law, and guidance for personal conduct.</p>
+            <p>Muslims believe the Quran to be inimitable and a miraculous book that contains wisdom, laws, and a way of life for mankind.</p>
+        </section>
+
+        <section id="culture">
+            <h1>Islamic Culture</h1>
+            <p>Islamic culture is diverse, influenced by geography, language, and history. From architecture and art to literature and music, Islamic culture has a rich history of contributions to the world.</p>
+            <p>Islamic architecture includes iconic structures such as the Dome of the Rock, the Alhambra, and the Blue Mosque. Islamic art emphasizes geometric patterns and arabesques, and Islamic calligraphy is revered as a form of artistic expression.</p>
+        </section>
+
+        <section id="sharia">
+            <h1>Islamic Law (Sharia)</h1>
+            <p>Sharia law refers to the system of laws that Muslims follow, based on the teachings of the Quran and the Hadith (sayings of Prophet Muhammad PBUH). It covers all aspects of life, from personal behavior to social issues.</p>
+            <p>Sharia is designed to promote justice and morality and is meant to protect faith, life, intellect, family, and wealth. It includes both civil and criminal matters and focuses on ethical conduct and fairness.</p>
+        </section>
+
+        <section id="peace">
+            <h1>Islam and Peace</h1>
+            <p>The word "Islam" itself comes from the Arabic word "Salaam," meaning peace. Islam promotes peace, tolerance, and understanding. It teaches that peace is achieved through submission to the will of God (Allah) and the practice of kindness, justice, and fairness.</p>
+            <p>Muslims are encouraged to live in harmony with others, regardless of faith, and to be peacemakers in society. Islam's teachings call for compassion, helping the needy, and forgiving others to build peaceful communities.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Learn about Islam</p>
+    </footer>
+
+    <script>
+        // Function to show the correct section based on the navigation link clicked
+        function showPage(pageId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show the clicked page section
+            const activeSection = document.getElementById(pageId);
+            activeSection.classList.add('active');
+        }
+    </script>
+</body>
+</html>
