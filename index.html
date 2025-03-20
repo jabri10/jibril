@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fruit Cipher Adventure 🍇🍓</title>
+    <title>Fruit Cipher Adventure 🍇🍉</title>
     <style>
+        /* General Styling */
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: #fff3e6;
             color: #5c4033;
             text-align: center;
             padding: 20px;
+            transition: background-color 0.5s, color 0.5s;
         }
         h1 {
             color: #ff6347;
@@ -32,7 +34,6 @@
         .result {
             font-size: 18px;
             margin-top: 20px;
-            animation: bounce 1s ease-out;
         }
         .trivia {
             font-size: 14px;
@@ -46,121 +47,203 @@
             border-radius: 5px;
             border: 1px solid #ddd;
         }
+        .fruit-image {
+            width: 50px;
+            height: 50px;
+            margin: 5px;
+            animation: bounce 0.5s ease-in-out;
+        }
         @keyframes bounce {
             0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-20px); }
             100% { transform: translateY(0); }
+        }
+        .dark-mode {
+            background-color: #2c2c2c;
+            color: #f0f0f0;
+        }
+        .dark-mode button {
+            background-color: #ff4500;
         }
     </style>
 </head>
 <body>
     <h1>Fruit Cipher Adventure 🍍✨</h1>
-    <label for="message">Enter a message to encode:</label>
+    <label for="message">Enter a message to encode or decode:</label>
     <input type="text" id="message" placeholder="Enter your message here">
     <br><br>
-    <button onclick="encodeMessage()">Encode Message 🍌</button>
-    <button onclick="decodeMessage()">Decode Message 🍍</button>
+    <button onclick="encodeMessage()">Encode Message</button>
+    <button onclick="decodeMessage()">Decode Message</button>
+    <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
 
     <div class="result" id="result"></div>
     <div class="trivia" id="trivia"></div>
 
+    <div id="fruitImages"></div>
+
+    <div>
+        <label for="volumeControl">Adjust Sound Volume:</label>
+        <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="0.5" onchange="adjustVolume(event)">
+    </div>
+
+    <!-- Audio elements -->
+    <audio id="appleSound" src="apple-plop.mp3"></audio>
+    <audio id="bananaSound" src="banana-swoosh.mp3"></audio>
+    <audio id="cherrySound" src="cherry-blop.mp3"></audio>
+    <audio id="pineappleSound" src="pineapple-plop.mp3"></audio>
+    <audio id="mangoSound" src="mango-swoosh.mp3"></audio>
+    <audio id="celebrationSound" src="celebration.mp3"></audio>
+
     <script>
-        // Fruit Cipher Dictionary with Emojis
+        // Expanded Fruit Cipher with all fruits
         const fruitCipher = {
-            'A': ['Apple 🍎', 'Red Apple 🍎', 'Green Apple 🍏'], 
-            'B': ['Banana 🍌'], 
-            'C': ['Coconut 🥥', 'Coco 🥥'], 
-            'D': ['Date 🌴'],
-            'E': ['Elderberry 🍇'],
-            'F': ['Fig 🍈'],
-            'G': ['Grape 🍇'],
-            'H': ['Honeydew 🍈'],
-            'I': ['Iced Mango 🥭'],
-            'J': ['Jackfruit 🍈'],
-            'K': ['Kiwi 🥝'],
-            'L': ['Lemon 🍋'],
-            'M': ['Mango 🥭'],
-            'N': ['Nectarine 🍑'],
-            'O': ['Orange 🍊'],
-            'P': ['Pineapple 🍍'],
-            'Q': ['Quince 🍏'],
-            'R': ['Raspberry 🍇'],
-            'S': ['Strawberry 🍓'],
-            'T': ['Tangerine 🍊'],
-            'U': ['Ugli Fruit 🍊'],
-            'V': ['Vanilla Bean 🍦'],
-            'W': ['Watermelon 🍉'],
-            'X': ['Xigua 🍉'],
-            'Y': ['Yellow Passion Fruit 🍍'],
-            'Z': ['Zucchini 🍆']
+            'A': { fruits: ['Apple 🍎'], sound: 'appleSound', image: 'apple.png' },
+            'B': { fruits: ['Banana 🍌'], sound: 'bananaSound', image: 'banana.png' },
+            'C': { fruits: ['Cherry 🍒'], sound: 'cherrySound', image: 'cherry.png' },
+            'D': { fruits: ['Dragonfruit 🐉'], sound: 'celebrationSound', image: 'dragonfruit.png' },
+            'E': { fruits: ['Elderberry 🍇'], sound: 'celebrationSound', image: 'elderberry.png' },
+            'F': { fruits: ['Fig 🍇'], sound: 'celebrationSound', image: 'fig.png' },
+            'G': { fruits: ['Grapes 🍇'], sound: 'celebrationSound', image: 'grapes.png' },
+            'H': { fruits: ['Honeydew 🍈'], sound: 'celebrationSound', image: 'honeydew.png' },
+            'I': { fruits: ['Indian Fig 🍈'], sound: 'celebrationSound', image: 'indian-fig.png' },
+            'J': { fruits: ['Jackfruit 🍈'], sound: 'celebrationSound', image: 'jackfruit.png' },
+            'K': { fruits: ['Kiwi 🥝'], sound: 'celebrationSound', image: 'kiwi.png' },
+            'L': { fruits: ['Lemon 🍋'], sound: 'celebrationSound', image: 'lemon.png' },
+            'M': { fruits: ['Mango 🥭'], sound: 'mangoSound', image: 'mango.png' },
+            'N': { fruits: ['Nectarine 🍑'], sound: 'celebrationSound', image: 'nectarine.png' },
+            'O': { fruits: ['Orange 🍊'], sound: 'celebrationSound', image: 'orange.png' },
+            'P': { fruits: ['Pineapple 🍍'], sound: 'pineappleSound', image: 'pineapple.png' },
+            'Q': { fruits: ['Quince 🍏'], sound: 'celebrationSound', image: 'quince.png' },
+            'R': { fruits: ['Raspberry 🍇'], sound: 'celebrationSound', image: 'raspberry.png' },
+            'S': { fruits: ['Strawberry 🍓'], sound: 'celebrationSound', image: 'strawberry.png' },
+            'T': { fruits: ['Tomato 🍅'], sound: 'celebrationSound', image: 'tomato.png' },
+            'U': { fruits: ['Uva 🍇'], sound: 'celebrationSound', image: 'uva.png' },
+            'V': { fruits: ['Vanilla Bean 🍦'], sound: 'celebrationSound', image: 'vanilla.png' },
+            'W': { fruits: ['Watermelon 🍉'], sound: 'celebrationSound', image: 'watermelon.png' },
+            'X': { fruits: ['Xigua 🍉'], sound: 'celebrationSound', image: 'xigua.png' },
+            'Y': { fruits: ['Yellow Passionfruit 🍍'], sound: 'celebrationSound', image: 'yellow-passionfruit.png' },
+            'Z': { fruits: ['Zucchini 🍆'], sound: 'celebrationSound', image: 'zucchini.png' }
         };
 
-        // Fruit Trivia Pool
+        // Trivia Pool with questions
         const fruitTrivia = [
-            "Did you know? Bananas are actually classified as herbs, and their plant is technically a berry! 🍌",
-            "Apples float on water because 25% of their volume is air. A buoyant fruit! 🍏",
-            "Pineapples were once so rare and expensive, they were used as centerpieces at parties to show off wealth! 🍍",
-            "Strawberries aren't technically berries, but bananas and avocados are! 🍓🍌",
-            "Mangoes are considered the 'king of fruits' in many parts of the world! 🥭",
+            { question: "Which fruit is known for floating due to air pockets? 🍎", answer: "Apple" },
+            { question: "Which fruit is considered the king of fruits in many parts of the world? 🥭", answer: "Mango" },
+            { question: "Which fruit was a symbol of wealth in 17th-century Europe? 🍍", answer: "Pineapple" },
+            { question: "Which fruit has seeds on the outside and is known as a strawberry? 🍓", answer: "Strawberry" },
+            { question: "Which fruit is technically a berry but often treated as a vegetable? 🍅", answer: "Tomato" },
+            { question: "Which fruit is a hybrid of the pineapple and orange? 🍊", answer: "Tangerine" }
         ];
 
-        // Function to encode the message
-        function encodeMessage() {
-            let message = document.getElementById('message').value.toUpperCase();
-            let encoded = [];
+        // Input Validation
+        function isValidInput(message) {
+            const regex = /^[A-Za-z\s]*$/;
+            return regex.test(message);
+        }
 
+        // Play a sound for a fruit
+        function playSound(fruit) {
+            const soundId = fruitCipher[fruit]?.sound || 'celebrationSound';
+            const audioElement = document.getElementById(soundId);
+            if (audioElement) {
+                audioElement.currentTime = 0;
+                audioElement.play();
+            }
+        }
+
+        // Adjust volume
+        function adjustVolume(event) {
+            const volume = event.target.value;
+            const sounds = document.querySelectorAll('audio');
+            sounds.forEach(sound => sound.volume = volume);
+        }
+
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Save encoded message
+        function downloadMessage(encodedMessage) {
+            const blob = new Blob([encodedMessage], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'encoded_message.txt';
+            link.click();
+        }
+
+        // Encode message
+        function encodeMessage() {
+            const message = document.getElementById('message').value.toUpperCase();
+            if (!isValidInput(message)) {
+                alert("Please enter only alphabetic characters!");
+                return;
+            }
+
+            const encoded = [];
+            const fruitsInMessage = [];
             for (let char of message) {
                 if (fruitCipher[char]) {
-                    let randomFruit = fruitCipher[char][Math.floor(Math.random() * fruitCipher[char].length)];
-                    encoded.push(randomFruit);
+                    const fruit = fruitCipher[char].fruits[0];
+                    encoded.push(fruit);
+                    fruitsInMessage.push(char);
+                    playSound(char);
                 } else {
-                    encoded.push(char); // Non-alphabet characters remain unchanged
+                    encoded.push(char); // Keep non-alphabet characters
                 }
             }
-
             document.getElementById('result').textContent = "Encoded Message: " + encoded.join(' ');
-            animateFruits();
-            displayFruitTrivia();
+            displayFruitImages(fruitsInMessage);
+            displayTrivia();
+
+            if (encoded.length > 10) playSound('celebrationSound'); // Special sound for longer messages
         }
 
-        // Function to decode the message
+        // Decode message
         function decodeMessage() {
-            let encodedMessage = document.getElementById('message').value.split(' ');
-            let decoded = [];
-
+            const encodedMessage = document.getElementById('message').value.split(' ');
+            const decoded = [];
+            const fruitsInMessage = [];
             for (let word of encodedMessage) {
-                let decodedChar = getKeyByValue(fruitCipher, word);
-                decoded.push(decodedChar ? decodedChar : word); // Keep non-fruit words as they are
-            }
-
-            document.getElementById('result').textContent = "Decoded Message: " + decoded.join('');
-            animateFruits();
-            displayFruitTrivia();
-        }
-
-        // Function to get the key for a given fruit value
-        function getKeyByValue(object, value) {
-            for (let key in object) {
-                if (object[key].includes(value)) {
-                    return key;
+                let found = false;
+                for (const [key, value] of Object.entries(fruitCipher)) {
+                    if (value.fruits.includes(word)) {
+                        decoded.push(key);
+                        fruitsInMessage.push(key);
+                        playSound(key);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    decoded.push(word); // Keep non-fruit words
                 }
             }
-            return null;
+            document.getElementById('result').textContent = "Decoded Message: " + decoded.join('');
+            displayFruitImages(fruitsInMessage);
+            displayTrivia();
         }
 
-        // Function to display random fruit trivia
-        function displayFruitTrivia() {
-            let trivia = fruitTrivia[Math.floor(Math.random() * fruitTrivia.length)];
-            document.getElementById('trivia').textContent = "🎉 Fun Fruit Fact: " + trivia;
+        // Display fruit images
+        function displayFruitImages(fruitList) {
+            const fruitImagesDiv = document.getElementById('fruitImages');
+            fruitImagesDiv.innerHTML = '';
+            fruitList.forEach(fruit => {
+                const img = document.createElement('img');
+                img.src = fruitCipher[fruit]?.image || '';
+                img.alt = fruit;
+                img.classList.add('fruit-image');
+                fruitImagesDiv.appendChild(img);
+            });
         }
 
-        // Function to animate the fruits
-        function animateFruits() {
-            document.getElementById('result').classList.add("bounce");
-            setTimeout(() => {
-                document.getElementById('result').classList.remove("bounce");
-            }, 1000); // Remove the animation after 1 second
+        // Display trivia and ask questions
+        function displayTrivia() {
+            const trivia = fruitTrivia[Math.floor(Math.random() * fruitTrivia.length)];
+            const triviaDiv = document.getElementById('trivia');
+            triviaDiv.innerHTML = `<p>🍍 Fun Fruit Fact: ${trivia.question}</p><p><strong>Answer: ${trivia.answer}</strong></p>`;
         }
     </script>
 </body>
 </html>
+
