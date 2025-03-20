@@ -3,223 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learn About Islam</title>
+    <title>Fruit Cipher Adventure 🍇🍓</title>
     <style>
-        /* General Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            background-color: #f0f3f5;
-            color: #2c3e50;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Header Styling */
-        header {
-            background: linear-gradient(135deg, #16a085, #1abc9c);
-            color: white;
-            padding: 2rem;
+            font-family: 'Arial', sans-serif;
+            background-color: #fff3e6;
+            color: #5c4033;
             text-align: center;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
-
-        header h1 {
-            font-size: 3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        header nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            padding: 0;
-            gap: 30px;
-        }
-
-        header nav ul li {
-            display: inline;
-        }
-
-        header nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: 500;
-            padding: 10px 15px;
-            border-radius: 25px;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        header nav ul li a:hover {
-            background-color: #2980b9;
-        }
-
-        /* Main content area */
-        main {
-            padding: 30px;
-            max-width: 1200px;
-            margin: 20px auto;
-            background: white;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        section {
-            display: none; /* Hidden by default */
-            padding: 2rem;
-        }
-
-        section.active {
-            display: block; /* Show active section */
-        }
-
         h1 {
-            color: #34495e;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            text-transform: capitalize;
+            color: #ff6347;
+            text-shadow: 2px 2px 5px rgba(255, 99, 71, 0.5);
         }
-
-        ul {
-            list-style: none;
-            margin-top: 1rem;
-            padding-left: 20px;
-        }
-
-        ul li {
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-
-        footer {
-            text-align: center;
-            padding: 1rem;
-            background-color: #16a085;
+        button {
+            background-color: #ff6347;
             color: white;
-            margin-top: 30px;
-            border-top: 2px solid #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
         }
-
-        footer p {
-            margin: 0;
-            font-size: 1.1rem;
+        button:hover {
+            background-color: #ff4500;
         }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            header nav ul {
-                flex-direction: column;
-            }
-
-            header nav ul li a {
-                padding: 12px;
-                font-size: 1.1rem;
-            }
-
-            main {
-                padding: 15px;
-            }
-
-            section h1 {
-                font-size: 2rem;
-            }
+        .result {
+            font-size: 18px;
+            margin-top: 20px;
+            animation: bounce 1s ease-out;
         }
-
+        .trivia {
+            font-size: 14px;
+            color: #2e8b57;
+            margin-top: 15px;
+        }
+        #message {
+            padding: 10px;
+            font-size: 16px;
+            width: 50%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Learn About Islam</h1>
-        <nav>
-            <ul>
-                <li><a href="#" onclick="showPage('home')">Home</a></li>
-                <li><a href="#" onclick="showPage('pillars')">The Five Pillars</a></li>
-                <li><a href="#" onclick="showPage('prophet')">Prophet Muhammad (PBUH)</a></li>
-                <li><a href="#" onclick="showPage('quran')">The Quran</a></li>
-                <li><a href="#" onclick="showPage('culture')">Islamic Culture</a></li>
-                <li><a href="#" onclick="showPage('sharia')">Islamic Law</a></li>
-                <li><a href="#" onclick="showPage('peace')">Islam and Peace</a></li>
-            </ul>
-        </nav>
-    </header>
+    <h1>Fruit Cipher Adventure 🍍✨</h1>
+    <label for="message">Enter a message to encode:</label>
+    <input type="text" id="message" placeholder="Enter your message here">
+    <br><br>
+    <button onclick="encodeMessage()">Encode Message 🍌</button>
+    <button onclick="decodeMessage()">Decode Message 🍍</button>
 
-    <main>
-        <section id="home" class="active">
-            <h1>Welcome to Learn About Islam</h1>
-            <p>Islam is one of the world’s major religions, with over a billion followers. It is based on the teachings of Prophet Muhammad (PBUH) and the Quran. This site will help you learn more about the core aspects of Islam.</p>
-        </section>
-
-        <section id="pillars">
-            <h1>The Five Pillars of Islam</h1>
-            <p>The Five Pillars of Islam are the foundation of a Muslim's faith and practice:</p>
-            <ul>
-                <li><strong>Shahada</strong> - The declaration of faith: "There is no god but Allah, and Muhammad is His Messenger."</li>
-                <li><strong>Salah</strong> - The five daily prayers that connect Muslims with Allah.</li>
-                <li><strong>Zakat</strong> - The giving of charity to those in need, typically 2.5% of one’s wealth.</li>
-                <li><strong>Sawm</strong> - Fasting during the month of Ramadan, refraining from food, drink, and sinful behavior.</li>
-                <li><strong>Hajj</strong> - The pilgrimage to Mecca that every Muslim must undertake at least once in their lifetime if financially and physically able.</li>
-            </ul>
-        </section>
-
-        <section id="prophet">
-            <h1>The Life of Prophet Muhammad (PBUH)</h1>
-            <p>Prophet Muhammad (PBUH) was born in Mecca in 570 CE. He is the final messenger of Allah, bringing the final revelation to humanity, the Quran. His teachings form the foundation of Islamic beliefs and practices.</p>
-            <p>He was known for his honesty, kindness, and wisdom. His life serves as a model for Muslims to follow, both in spiritual and daily matters. He is deeply revered in Islam as the "Seal of the Prophets."</p>
-        </section>
-
-        <section id="quran">
-            <h1>The Holy Quran</h1>
-            <p>The Quran is the sacred text of Islam, believed to be the direct word of God as revealed to Prophet Muhammad (PBUH) over 23 years. It is considered the ultimate source of guidance for Muslims in all aspects of life.</p>
-            <p>The Quran is divided into 114 chapters, called surahs, which cover theology, morality, law, and guidance for personal conduct.</p>
-            <p>Muslims believe the Quran to be inimitable and a miraculous book that contains wisdom, laws, and a way of life for mankind.</p>
-        </section>
-
-        <section id="culture">
-            <h1>Islamic Culture</h1>
-            <p>Islamic culture is diverse, influenced by geography, language, and history. From architecture and art to literature and music, Islamic culture has a rich history of contributions to the world.</p>
-            <p>Islamic architecture includes iconic structures such as the Dome of the Rock, the Alhambra, and the Blue Mosque. Islamic art emphasizes geometric patterns and arabesques, and Islamic calligraphy is revered as a form of artistic expression.</p>
-        </section>
-
-        <section id="sharia">
-            <h1>Islamic Law (Sharia)</h1>
-            <p>Sharia law refers to the system of laws that Muslims follow, based on the teachings of the Quran and the Hadith (sayings of Prophet Muhammad PBUH). It covers all aspects of life, from personal behavior to social issues.</p>
-            <p>Sharia is designed to promote justice and morality and is meant to protect faith, life, intellect, family, and wealth. It includes both civil and criminal matters and focuses on ethical conduct and fairness.</p>
-        </section>
-
-        <section id="peace">
-            <h1>Islam and Peace</h1>
-            <p>The word "Islam" itself comes from the Arabic word "Salaam," meaning peace. Islam promotes peace, tolerance, and understanding. It teaches that peace is achieved through submission to the will of God (Allah) and the practice of kindness, justice, and fairness.</p>
-            <p>Muslims are encouraged to live in harmony with others, regardless of faith, and to be peacemakers in society. Islam's teachings call for compassion, helping the needy, and forgiving others to build peaceful communities.</p>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Learn About Islam | All Rights Reserved</p>
-    </footer>
+    <div class="result" id="result"></div>
+    <div class="trivia" id="trivia"></div>
 
     <script>
-        // Function to show the correct section based on the navigation link clicked
-        function showPage(pageId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
+        // Fruit Cipher Dictionary with Emojis
+        const fruitCipher = {
+            'A': ['Apple 🍎', 'Red Apple 🍎', 'Green Apple 🍏'], 
+            'B': ['Banana 🍌'], 
+            'C': ['Coconut 🥥', 'Coco 🥥'], 
+            'D': ['Date 🌴'],
+            'E': ['Elderberry 🍇'],
+            'F': ['Fig 🍈'],
+            'G': ['Grape 🍇'],
+            'H': ['Honeydew 🍈'],
+            'I': ['Iced Mango 🥭'],
+            'J': ['Jackfruit 🍈'],
+            'K': ['Kiwi 🥝'],
+            'L': ['Lemon 🍋'],
+            'M': ['Mango 🥭'],
+            'N': ['Nectarine 🍑'],
+            'O': ['Orange 🍊'],
+            'P': ['Pineapple 🍍'],
+            'Q': ['Quince 🍏'],
+            'R': ['Raspberry 🍇'],
+            'S': ['Strawberry 🍓'],
+            'T': ['Tangerine 🍊'],
+            'U': ['Ugli Fruit 🍊'],
+            'V': ['Vanilla Bean 🍦'],
+            'W': ['Watermelon 🍉'],
+            'X': ['Xigua 🍉'],
+            'Y': ['Yellow Passion Fruit 🍍'],
+            'Z': ['Zucchini 🍆']
+        };
 
-            // Show the clicked page section
-            const activeSection = document.getElementById(pageId);
-            activeSection.classList.add('active');
+        // Fruit Trivia Pool
+        const fruitTrivia = [
+            "Did you know? Bananas are actually classified as herbs, and their plant is technically a berry! 🍌",
+            "Apples float on water because 25% of their volume is air. A buoyant fruit! 🍏",
+            "Pineapples were once so rare and expensive, they were used as centerpieces at parties to show off wealth! 🍍",
+            "Strawberries aren't technically berries, but bananas and avocados are! 🍓🍌",
+            "Mangoes are considered the 'king of fruits' in many parts of the world! 🥭",
+        ];
+
+        // Function to encode the message
+        function encodeMessage() {
+            let message = document.getElementById('message').value.toUpperCase();
+            let encoded = [];
+
+            for (let char of message) {
+                if (fruitCipher[char]) {
+                    let randomFruit = fruitCipher[char][Math.floor(Math.random() * fruitCipher[char].length)];
+                    encoded.push(randomFruit);
+                } else {
+                    encoded.push(char); // Non-alphabet characters remain unchanged
+                }
+            }
+
+            document.getElementById('result').textContent = "Encoded Message: " + encoded.join(' ');
+            animateFruits();
+            displayFruitTrivia();
+        }
+
+        // Function to decode the message
+        function decodeMessage() {
+            let encodedMessage = document.getElementById('message').value.split(' ');
+            let decoded = [];
+
+            for (let word of encodedMessage) {
+                let decodedChar = getKeyByValue(fruitCipher, word);
+                decoded.push(decodedChar ? decodedChar : word); // Keep non-fruit words as they are
+            }
+
+            document.getElementById('result').textContent = "Decoded Message: " + decoded.join('');
+            animateFruits();
+            displayFruitTrivia();
+        }
+
+        // Function to get the key for a given fruit value
+        function getKeyByValue(object, value) {
+            for (let key in object) {
+                if (object[key].includes(value)) {
+                    return key;
+                }
+            }
+            return null;
+        }
+
+        // Function to display random fruit trivia
+        function displayFruitTrivia() {
+            let trivia = fruitTrivia[Math.floor(Math.random() * fruitTrivia.length)];
+            document.getElementById('trivia').textContent = "🎉 Fun Fruit Fact: " + trivia;
+        }
+
+        // Function to animate the fruits
+        function animateFruits() {
+            document.getElementById('result').classList.add("bounce");
+            setTimeout(() => {
+                document.getElementById('result').classList.remove("bounce");
+            }, 1000); // Remove the animation after 1 second
         }
     </script>
 </body>
 </html>
-
