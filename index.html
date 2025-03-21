@@ -1,249 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fruit Cipher Adventure 🍇🍉</title>
-    <style>
-        /* General Styling */
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #fff3e6;
-            color: #5c4033;
-            text-align: center;
-            padding: 20px;
-            transition: background-color 0.5s, color 0.5s;
-        }
-        h1 {
-            color: #ff6347;
-            text-shadow: 2px 2px 5px rgba(255, 99, 71, 0.5);
-        }
-        button {
-            background-color: #ff6347;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin: 10px;
-        }
-        button:hover {
-            background-color: #ff4500;
-        }
-        .result {
-            font-size: 18px;
-            margin-top: 20px;
-        }
-        .trivia {
-            font-size: 14px;
-            color: #2e8b57;
-            margin-top: 15px;
-        }
-        #message {
-            padding: 10px;
-            font-size: 16px;
-            width: 50%;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-        .fruit-image {
-            width: 50px;
-            height: 50px;
-            margin: 5px;
-            animation: bounce 0.5s ease-in-out;
-        }
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0); }
-        }
-        .dark-mode {
-            background-color: #2c2c2c;
-            color: #f0f0f0;
-        }
-        .dark-mode button {
-            background-color: #ff4500;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pathfinding Challenge</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    td {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      border: 1px solid black;
+    }
+    td.obstacle {
+      background-color: #ff5555;
+    }
+    td.normal {
+      background-color: #ffffff;
+    }
+    td.trap {
+      background-color: #ffcc00;
+    }
+    td.path {
+      background-color: #88cc88;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Fruit Cipher Adventure 🍍✨</h1>
-    <label for="message">Enter a message to encode or decode:</label>
-    <input type="text" id="message" placeholder="Enter your message here">
-    <br><br>
-    <button onclick="encodeMessage()">Encode Message</button>
-    <button onclick="decodeMessage()">Decode Message</button>
-    <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  <h1>Pathfinding Challenge</h1>
+  <p>
+    Use the grid below to define your dungeon: <br />
+    0 = normal tile, 1 = trap (+5 cost), -1 = obstacle (impassable)
+  </p>
+  <table id="grid">
+    <!-- Grid cells will be generated dynamically -->
+  </table>
+  <button id="findPathBtn">Find Path</button>
+  <p id="output"></p>
 
-    <div class="result" id="result"></div>
-    <div class="trivia" id="trivia"></div>
+  <script>
+    const grid = [
+      [0, 1, 0],
+      [-1, 2, 0],
+      [0, 0, 0],
+    ];
 
-    <div id="fruitImages"></div>
+    const cellColors = {
+      "-1": "obstacle",
+      "0": "normal",
+      "1": "trap",
+      "2": "normal",
+    };
 
-    <div>
-        <label for="volumeControl">Adjust Sound Volume:</label>
-        <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="0.5" onchange="adjustVolume(event)">
-    </div>
+    const gridSize = 3;
 
-    <!-- Audio elements -->
-    <audio id="appleSound" src="apple-plop.mp3"></audio>
-    <audio id="bananaSound" src="banana-swoosh.mp3"></audio>
-    <audio id="cherrySound" src="cherry-blop.mp3"></audio>
-    <audio id="pineappleSound" src="pineapple-plop.mp3"></audio>
-    <audio id="mangoSound" src="mango-swoosh.mp3"></audio>
-    <audio id="celebrationSound" src="celebration.mp3"></audio>
+    function displayGrid() {
+      const gridElement = document.getElementById("grid");
+      gridElement.innerHTML = ""; // Clear existing grid
 
-    <script>
-        // Expanded Fruit Cipher with all fruits
-        const fruitCipher = {
-            'A': { fruits: ['Apple 🍎'], sound: 'appleSound', image: 'apple.png' },
-            'B': { fruits: ['Banana 🍌'], sound: 'bananaSound', image: 'banana.png' },
-            'C': { fruits: ['Cherry 🍒'], sound: 'cherrySound', image: 'cherry.png' },
-            'D': { fruits: ['Dragonfruit 🐉'], sound: 'celebrationSound', image: 'dragonfruit.png' },
-            'E': { fruits: ['Elderberry 🍇'], sound: 'celebrationSound', image: 'elderberry.png' },
-            'F': { fruits: ['Fig 🍇'], sound: 'celebrationSound', image: 'fig.png' },
-            'G': { fruits: ['Grapes 🍇'], sound: 'celebrationSound', image: 'grapes.png' },
-            'H': { fruits: ['Honeydew 🍈'], sound: 'celebrationSound', image: 'honeydew.png' },
-            'I': { fruits: ['Indian Fig 🍈'], sound: 'celebrationSound', image: 'indian-fig.png' },
-            'J': { fruits: ['Jackfruit 🍈'], sound: 'celebrationSound', image: 'jackfruit.png' },
-            'K': { fruits: ['Kiwi 🥝'], sound: 'celebrationSound', image: 'kiwi.png' },
-            'L': { fruits: ['Lemon 🍋'], sound: 'celebrationSound', image: 'lemon.png' },
-            'M': { fruits: ['Mango 🥭'], sound: 'mangoSound', image: 'mango.png' },
-            'N': { fruits: ['Nectarine 🍑'], sound: 'celebrationSound', image: 'nectarine.png' },
-            'O': { fruits: ['Orange 🍊'], sound: 'celebrationSound', image: 'orange.png' },
-            'P': { fruits: ['Pineapple 🍍'], sound: 'pineappleSound', image: 'pineapple.png' },
-            'Q': { fruits: ['Quince 🍏'], sound: 'celebrationSound', image: 'quince.png' },
-            'R': { fruits: ['Raspberry 🍇'], sound: 'celebrationSound', image: 'raspberry.png' },
-            'S': { fruits: ['Strawberry 🍓'], sound: 'celebrationSound', image: 'strawberry.png' },
-            'T': { fruits: ['Tomato 🍅'], sound: 'celebrationSound', image: 'tomato.png' },
-            'U': { fruits: ['Uva 🍇'], sound: 'celebrationSound', image: 'uva.png' },
-            'V': { fruits: ['Vanilla Bean 🍦'], sound: 'celebrationSound', image: 'vanilla.png' },
-            'W': { fruits: ['Watermelon 🍉'], sound: 'celebrationSound', image: 'watermelon.png' },
-            'X': { fruits: ['Xigua 🍉'], sound: 'celebrationSound', image: 'xigua.png' },
-            'Y': { fruits: ['Yellow Passionfruit 🍍'], sound: 'celebrationSound', image: 'yellow-passionfruit.png' },
-            'Z': { fruits: ['Zucchini 🍆'], sound: 'celebrationSound', image: 'zucchini.png' }
-        };
+      for (let i = 0; i < gridSize; i++) {
+        const row = document.createElement("tr");
 
-        // Trivia Pool with questions
-        const fruitTrivia = [
-            { question: "Which fruit is known for floating due to air pockets? 🍎", answer: "Apple" },
-            { question: "Which fruit is considered the king of fruits in many parts of the world? 🥭", answer: "Mango" },
-            { question: "Which fruit was a symbol of wealth in 17th-century Europe? 🍍", answer: "Pineapple" },
-            { question: "Which fruit has seeds on the outside and is known as a strawberry? 🍓", answer: "Strawberry" },
-            { question: "Which fruit is technically a berry but often treated as a vegetable? 🍅", answer: "Tomato" },
-            { question: "Which fruit is a hybrid of the pineapple and orange? 🍊", answer: "Tangerine" }
-        ];
+        for (let j = 0; j < gridSize; j++) {
+          const cell = document.createElement("td");
+          const value = grid[i][j];
 
-        // Input Validation
-        function isValidInput(message) {
-            const regex = /^[A-Za-z\s]*$/;
-            return regex.test(message);
+          cell.className = cellColors[value];
+          cell.innerText = `${value}`;
+          row.appendChild(cell);
         }
 
-        // Play a sound for a fruit
-        function playSound(fruit) {
-            const soundId = fruitCipher[fruit]?.sound || 'celebrationSound';
-            const audioElement = document.getElementById(soundId);
-            if (audioElement) {
-                audioElement.currentTime = 0;
-                audioElement.play();
+        gridElement.appendChild(row);
+      }
+    }
+
+    function findShortestPath() {
+      const directions = [
+        [0, 1], // Right
+        [1, 0], // Down
+        [0, -1], // Left
+        [-1, 0], // Up
+      ];
+
+      const rows = grid.length;
+      const cols = grid[0].length;
+      const costs = Array.from({ length: rows }, () => Array(cols).fill(Infinity));
+      costs[0][0] = 0; // Starting point cost is 0
+      const queue = [[0, 0]]; // Start from top-left corner
+
+      while (queue.length > 0) {
+        const [x, y] = queue.shift();
+        const currentCost = costs[x][y];
+
+        for (const [dx, dy] of directions) {
+          const nx = x + dx;
+          const ny = y + dy;
+
+          if (nx >= 0 && ny >= 0 && nx < rows && ny < cols && grid[nx][ny] !== -1) {
+            const nextCost = currentCost + (grid[nx][ny] === 1 ? 5 : 1);
+            if (nextCost < costs[nx][ny]) {
+              costs[nx][ny] = nextCost;
+              queue.push([nx, ny]);
             }
+          }
         }
+      }
 
-        // Adjust volume
-        function adjustVolume(event) {
-            const volume = event.target.value;
-            const sounds = document.querySelectorAll('audio');
-            sounds.forEach(sound => sound.volume = volume);
-        }
+      const result = costs[rows - 1][cols - 1];
+      return result === Infinity ? "No path available!" : `Shortest path cost: ${result}`;
+    }
 
-        // Dark mode toggle
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
+    function handleFindPath() {
+      const result = findShortestPath();
+      document.getElementById("output").textContent = result;
+    }
 
-        // Save encoded message
-        function downloadMessage(encodedMessage) {
-            const blob = new Blob([encodedMessage], { type: 'text/plain' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'encoded_message.txt';
-            link.click();
-        }
+    // Attach event listener to the button
+    document.getElementById("findPathBtn").addEventListener("click", handleFindPath);
 
-        // Encode message
-        function encodeMessage() {
-            const message = document.getElementById('message').value.toUpperCase();
-            if (!isValidInput(message)) {
-                alert("Please enter only alphabetic characters!");
-                return;
-            }
-
-            const encoded = [];
-            const fruitsInMessage = [];
-            for (let char of message) {
-                if (fruitCipher[char]) {
-                    const fruit = fruitCipher[char].fruits[0];
-                    encoded.push(fruit);
-                    fruitsInMessage.push(char);
-                    playSound(char);
-                } else {
-                    encoded.push(char); // Keep non-alphabet characters
-                }
-            }
-            document.getElementById('result').textContent = "Encoded Message: " + encoded.join(' ');
-            displayFruitImages(fruitsInMessage);
-            displayTrivia();
-
-            if (encoded.length > 10) playSound('celebrationSound'); // Special sound for longer messages
-        }
-
-        // Decode message
-        function decodeMessage() {
-            const encodedMessage = document.getElementById('message').value.split(' ');
-            const decoded = [];
-            const fruitsInMessage = [];
-            for (let word of encodedMessage) {
-                let found = false;
-                for (const [key, value] of Object.entries(fruitCipher)) {
-                    if (value.fruits.includes(word)) {
-                        decoded.push(key);
-                        fruitsInMessage.push(key);
-                        playSound(key);
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found) {
-                    decoded.push(word); // Keep non-fruit words
-                }
-            }
-            document.getElementById('result').textContent = "Decoded Message: " + decoded.join('');
-            displayFruitImages(fruitsInMessage);
-            displayTrivia();
-        }
-
-        // Display fruit images
-        function displayFruitImages(fruitList) {
-            const fruitImagesDiv = document.getElementById('fruitImages');
-            fruitImagesDiv.innerHTML = '';
-            fruitList.forEach(fruit => {
-                const img = document.createElement('img');
-                img.src = fruitCipher[fruit]?.image || '';
-                img.alt = fruit;
-                img.classList.add('fruit-image');
-                fruitImagesDiv.appendChild(img);
-            });
-        }
-
-        // Display trivia and ask questions
-        function displayTrivia() {
-            const trivia = fruitTrivia[Math.floor(Math.random() * fruitTrivia.length)];
-            const triviaDiv = document.getElementById('trivia');
-            triviaDiv.innerHTML = `<p>🍍 Fun Fruit Fact: ${trivia.question}</p><p><strong>Answer: ${trivia.answer}</strong></p>`;
-        }
-    </script>
+    // Display the initial grid
+    displayGrid();
+  </script>
 </body>
 </html>
 
